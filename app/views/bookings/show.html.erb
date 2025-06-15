@@ -1,0 +1,19 @@
+<h2>
+  Booked flight
+  from <%= @flight.departure_airport.code %>
+  to <%= @flight.arrival_airport.code %>
+  ( ID: <%= @flight.id %> )
+</h2>
+<h3>
+  Taking off at <%= @flight.start_datetime %><br>
+  Duration <%= @flight.duration %> minutes
+</h3>
+<% @booking.passengers.each_with_index do |p, i| %>
+  <div>
+    <h3>Passenger <%= i + 1 %></h3>
+    <p>Name: <%= p.name %></p>
+    <p>Email: <%= p.email %></p>
+  </div>
+<% end %>
+
+<%= link_to "Return to search", flights_path %>

@@ -1,0 +1,16 @@
+lv:
+   hello: "Sveika pasaule"
+   search: "Meklēt lidojumus"
+   Departure: "Izbraukšana"
+   Arrival: "Ierašanās"
+   Date: "Datums"
+   Passengers: "Pasažieri"
+   Search: "Meklēt"
+   Error: "Nav atrasts neviens lidojums"
+   Departure date: "Izbraukšanas datums"
+   Duration: "Ilgums"
+   Minutes: "Minūtes"
+   Current: "Pašlaik tiek rezervēts lidojums no"
+   locales:
+    en: "Angļu"
+    lv: "Latviski"

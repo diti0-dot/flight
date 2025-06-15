@@ -1,0 +1,46 @@
+
+<h1><%= t("search")%></h1>
+<%= form_with method: :get do |f| %> 
+  <div>
+    <%= f.label :departure_code, t("Departure") %>
+    <%= f.select :departure_code, @airports_options %>
+  </div>
+
+  <div>
+    <%= f.label :arrival_code, t("Arrival") %>
+    <%= f.select :arrival_code, @airports_options %>
+  </div>
+
+  <div>
+    <%= f.label :date, t("Date") %>
+    <%= f.select :date, @date_options%>
+  </div>
+
+  <div>
+    <%= f.label :num_tickets, t("Passengers") %>
+    <%= f.select :num_tickets, @num_tickets_options %>
+  </div>
+
+  <%= f.submit t("Search") %>
+<% end %>
+
+
+<% if @flights.empty? %>
+  <h4><%=t("Error")%></h4>
+<% else %>
+  <%= form_with url: new_booking_path, method: :get do %>
+    <%= hidden_field :booking, :num_tickets, value: params[:num_tickets] %>
+    <% for flight in @flights %>
+      <div style="display:flex">
+        <%= radio_button :booking, :flight_id, flight.id %>
+        <div style="margin-left:1rem">
+          <p><%= t("Departure") %>: <%= flight.departure_airport.code %></p>
+          <p><%= t("Arrival") %>: <%=  flight.arrival_airport.code %></p>
+          <p><%= t("Departure date") %>:<%= flight.start_datetime %></p>
+          <p><%= t("Duration") %>:<%= flight.duration %> <%= t("Minutes")%></p>
+        </div>
+      </div>
+    <% end %>
+    <%= submit_tag("Select Flight") %>
+  <% end %>
+<% end %>
