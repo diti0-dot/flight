@@ -1,5 +1,11 @@
 class BookingsController < ApplicationController
    include Internationalization
+
+   def index
+  @bookings = current_user.bookings
+end
+
+
   def new
     @booking = Booking.new
     @flight = flight_find
@@ -10,14 +16,15 @@ class BookingsController < ApplicationController
   def create
      @booking = Booking.new(booking_params)
     @flight = flight_find
+     @booking.user = current_user
     @num_tickets = ticket_params
 
     if @booking.save
       flash[:notice] = "Flight booked!"
       redirect_to @booking
     else
-      flash.now[:alert] = "Could not book flight!"
-      render :new, status: :unprocessable_entity
+      Rails.logger.info "Booking errors: #{@booking.errors.full_messages.join(', ')}"
+  render :new, status: :unprocessable_entity
     end
   end
 

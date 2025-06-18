@@ -8,6 +8,12 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+admin = User.find_or_create_by(email: 'admin@example.com') do |user|
+  user.password = 'password123'
+  user.admin = true
+end
+
+
 # Create all airports
 ["JFK", "LAX", "ORD", "ATL", "YYZ",
  "MEX", "MIA", "SFO", "YVR", "DFW",

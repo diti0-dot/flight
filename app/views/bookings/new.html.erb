@@ -1,26 +1,30 @@
-<h2>
+<h2 class="mb-3">
   <%= t("Current") %> <%= @flight.departure_airport.code %>
   to <%= @flight.arrival_airport.code %>
   ( ID: <%= @flight.id %> )
 </h2>
-<h3>
+<h3 class="mb-4">
   Taking off at <%= @flight.start_datetime %><br>
   Duration <%= @flight.duration %> minutes
 </h3>
 
-<%= form_with model: @booking do |f| %>
+<%= form_with model: @booking, local: true do |f| %>
   <%= f.fields_for :passengers do |p| %>
-    <div style="margin:20px">
+    <div class="mb-4 p-3 border rounded">
       <h3>Passenger <%= p.index + 1 %></h3>
-      <%= p.label :name %>
-      <%= p.text_field :name %>
-      <%= p.label :email %>
-      <%= p.email_field :email %>
+      <div class="mb-3">
+        <%= p.label :name, class: "form-label" %>
+        <%= p.text_field :name, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= p.label :email, class: "form-label" %>
+        <%= p.email_field :email, class: "form-control" %>
+      </div>
     </div>
   <% end %>
   <%= f.hidden_field :flight_id, value: @flight.id %>
   <%= f.hidden_field :num_tickets, value: @num_tickets %>
-  <%= f.submit "Book Flight" %>
+  <%= f.submit "Book Flight", class: "btn btn-primary" %>
 <% end %>
 
-<%= link_to "Return to search", flights_path %>
+<%= link_to "Return to search", flights_path, class: "btn btn-link mt-3" %>

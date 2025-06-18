@@ -17,26 +17,16 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%= javascript_include_tag 'https://html2canvas.hertzen.com/dist/html2canvas.min.js' %>
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <ul>
-  <% I18n.available_locales.each do |locale| %>
-    <li>
-      <% if I18n.locale == locale %>
-    
-        <%= t(locale, scope: 'locales') %>
-      <% elsif @flights.present? %>
-          <%=  link_to t(locale, scope: 'locales'), url_for(locale: locale, params: {departure_code: @search_params[:departure_code], arrival_code: @search_params[:arrival_code] , date: @search_params[:date], num_tickets: @search_params[:num_tickets]} ) %>
-      <% else%>
-        <%=  link_to t(locale, scope: 'locales'), url_for(locale: locale) %>  
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+ <%= render 'layouts/nav' %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>

@@ -1,46 +1,50 @@
+<h1><%= t("search") %></h1>
+<%= form_with method: :get, local: true, class: "mb-4" do |f| %> 
+  <div class="row g-3">
+    <div class="col-md-3">
+      <%= f.label :departure_code, t("Departure"), class: "form-label" %>
+      <%= f.select :departure_code, @airports_options, {}, class: "form-select" %>
+    </div>
 
-<h1><%= t("search")%></h1>
-<%= form_with method: :get do |f| %> 
-  <div>
-    <%= f.label :departure_code, t("Departure") %>
-    <%= f.select :departure_code, @airports_options %>
+    <div class="col-md-3">
+      <%= f.label :arrival_code, t("Arrival"), class: "form-label" %>
+      <%= f.select :arrival_code, @airports_options, {}, class: "form-select" %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.label :date, t("Date"), class: "form-label" %>
+      <%= f.select :date, @date_options, {}, class: "form-select" %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.label :num_tickets, t("Passengers"), class: "form-label" %>
+      <%= f.select :num_tickets, @num_tickets_options, {}, class: "form-select" %>
+    </div>
   </div>
 
-  <div>
-    <%= f.label :arrival_code, t("Arrival") %>
-    <%= f.select :arrival_code, @airports_options %>
+  <div class="mt-3">
+    <%= f.submit t("Search"), class: "btn btn-primary" %>
   </div>
-
-  <div>
-    <%= f.label :date, t("Date") %>
-    <%= f.select :date, @date_options%>
-  </div>
-
-  <div>
-    <%= f.label :num_tickets, t("Passengers") %>
-    <%= f.select :num_tickets, @num_tickets_options %>
-  </div>
-
-  <%= f.submit t("Search") %>
 <% end %>
 
-
 <% if @flights.empty? %>
-  <h4><%=t("Error")%></h4>
+  <h4 class="text-danger"><%= t("Error") %></h4>
 <% else %>
-  <%= form_with url: new_booking_path, method: :get do %>
+  <%= form_with url: new_booking_path, method: :get, local: true do %>
     <%= hidden_field :booking, :num_tickets, value: params[:num_tickets] %>
-    <% for flight in @flights %>
-      <div style="display:flex">
-        <%= radio_button :booking, :flight_id, flight.id %>
-        <div style="margin-left:1rem">
-          <p><%= t("Departure") %>: <%= flight.departure_airport.code %></p>
-          <p><%= t("Arrival") %>: <%=  flight.arrival_airport.code %></p>
-          <p><%= t("Departure date") %>:<%= flight.start_datetime %></p>
-          <p><%= t("Duration") %>:<%= flight.duration %> <%= t("Minutes")%></p>
+
+    <% @flights.each do |flight| %>
+      <div class="d-flex align-items-center mb-3 p-3 border rounded">
+        <%= radio_button :booking, :flight_id, flight.id, class: "form-check-input me-3" %>
+        <div>
+          <p><strong><%= t("Departure") %>:</strong> <%= flight.departure_airport.code %></p>
+          <p><strong><%= t("Arrival") %>:</strong> <%= flight.arrival_airport.code %></p>
+          <p><strong><%= t("Departure date") %>:</strong> <%= flight.start_datetime.strftime("%d %b %Y, %H:%M") %></p>
+          <p><strong><%= t("Duration") %>:</strong> <%= flight.duration %> <%= t("Minutes") %></p>
         </div>
       </div>
     <% end %>
-    <%= submit_tag("Select Flight") %>
+
+    <%= submit_tag t("Select Flight"), class: "btn btn-success" %>
   <% end %>
 <% end %>

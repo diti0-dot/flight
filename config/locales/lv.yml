@@ -11,6 +11,7 @@ lv:
    Duration: "Ilgums"
    Minutes: "Minūtes"
    Current: "Pašlaik tiek rezervēts lidojums no"
+   Select Flight: "Izvēlieties Lidojums"
    locales:
     en: "Angļu"
     lv: "Latviski"

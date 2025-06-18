@@ -6,7 +6,8 @@ class FlightsController < ApplicationController
     @date_options = Flight.distinct.pluck(:start_datetime).map(&:to_date).sort
     @num_tickets_options = (1..4)
     @flights = search_params_present? ? Flight.search(params).order(:start_datetime) : []
-    
+    Rails.logger.info "Flights found: #{@flights.count}"
+
     @search_params = params
   end
 

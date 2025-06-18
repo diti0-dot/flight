@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>Booking Details</h1>
+  
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Flight Information</h5>
+      <p>
+        <strong>Route:</strong> 
+        <%= @booking.flight.departure_airport.code %> → 
+        <%= @booking.flight.arrival_airport.code %>
+      </p>
+      <p>
+        <strong>Date:</strong> 
+        <%= @booking.flight.start_datetime.strftime("%B %d, %Y at %H:%M") %>
+      </p>
+      <p><strong>Duration:</strong> <%= @booking.flight.duration %> minutes</p>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Booking Information</h5>
+      <p><strong>Booking ID:</strong> <%= @booking.id %></p>
+      <p><strong>Number of Tickets:</strong> <%= @booking.num_tickets %></p>
+      <p><strong>Booked by:</strong> <%= @booking.user&.email || 'Guest' %></p>
+      <p><strong>Booked on:</strong> <%= @booking.created_at.strftime("%B %d, %Y") %></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Passengers</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @booking.passengers.each do |passenger| %>
+            <tr>
+              <td><%= passenger.name %></td>
+              <td><%= passenger.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to 'Back to Bookings', admin_bookings_path, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>

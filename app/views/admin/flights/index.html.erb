@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Manage Flights</h1>
+  
+  <div class="mb-4">
+    <%= link_to 'New Flight', new_admin_flight_path, class: 'btn btn-primary' %>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Flight ID</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Date & Time</th>
+        <th>Duration</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @flights.each do |flight| %>
+        <tr>
+          <td><%= flight.id %></td>
+          <td><%= flight.departure_airport.code %></td>
+          <td><%= flight.arrival_airport.code %></td>
+          <td><%= flight.start_datetime.strftime("%B %d, %Y at %H:%M") %></td>
+          <td><%= flight.duration %> minutes</td>
+          <td>
+            <%= link_to 'Edit', edit_admin_flight_path(flight), 
+               class: 'btn btn-sm btn-outline-primary',
+               data: { turbo_frame: 'flight_edit_frame' } %>
+           <%= button_to 'Delete', admin_flight_path(flight), method: :delete,
+      data: { confirm: 'Are you sure?' },
+      class: 'btn btn-sm btn-outline-danger' %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

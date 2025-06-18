@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>Manage Bookings</h1>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Flight</th>
+        <th>Passengers</th>
+        <th>User</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bookings.each do |booking| %>
+        <tr>
+          <td><%= booking.id %></td>
+          <td>
+            <%= booking.flight.departure_airport.code %> → 
+            <%= booking.flight.arrival_airport.code %>
+          </td>
+          <td><%= booking.passengers.count %></td>
+          <td><%= booking.user&.email || 'Guest' %></td>
+          <td><%= booking.created_at.strftime("%B %d, %Y") %></td>
+          <td>
+            <%= link_to 'View', admin_booking_path(booking), class: 'btn btn-sm btn-outline-primary' %>
+            <%= link_to 'Edit', edit_admin_booking_path(booking), class: 'btn btn-sm btn-outline-secondary' %>
+            <%= button_to 'Delete', admin_booking_path(booking), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

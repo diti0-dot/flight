@@ -1,0 +1,60 @@
+<div class="container">
+  <h1>Edit Booking</h1>
+
+<% if @booking.errors.any? %>
+  <div class="errors">
+    <h4><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h4>
+    <ul>
+      <% @booking.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  
+  <%= form_with model: [:admin, @booking], local: true do |f| %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Flight Information</h5>
+        <p>
+          <%= @flight.departure_airport.code %> → 
+          <%= @flight.arrival_airport.code %> | 
+          <%= @flight.start_datetime.strftime("%B %d, %Y at %H:%M") %>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :num_tickets, "Number of Tickets" %>
+      <%= f.number_field :num_tickets, class: 'form-control' %>
+    </div>
+
+    <h3>Passengers</h3>
+    <%= f.fields_for :passengers do |passenger_form| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="form-group">
+            <%= passenger_form.label :name %>
+            <%= passenger_form.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= passenger_form.label :email %>
+            <%= passenger_form.email_field :email, class: 'form-control' %>
+          </div>
+          <% if passenger_form.object.persisted? %>
+            <div class="form-check">
+              <%= passenger_form.check_box :_destroy, class: 'form-check-input' %>
+              <%= passenger_form.label :_destroy, "Remove passenger", class: 'form-check-label' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit 'Update Booking', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', admin_booking_path(@booking), class: 'btn btn-outline-secondary' %>
+    </div>
+  <% end %>
+</div>

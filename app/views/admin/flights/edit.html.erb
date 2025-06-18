@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Edit Flight</h1>
+  
+  <%= form_with model: [:admin, @flight], local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :departure_airport_id %>
+      <%= f.select :departure_airport_id, 
+                   @airports.map { |a| [a.code, a.id] }, 
+                   {}, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :arrival_airport_id %>
+      <%= f.select :arrival_airport_id, 
+                   @airports.map { |a| [a.code, a.id] }, 
+                   {}, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :start_datetime %>
+      <%= f.datetime_local_field :start_datetime, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :duration, "Duration (minutes)" %>
+      <%= f.number_field :duration, class: 'form-control' %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Update Flight', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', admin_flights_path, class: 'btn btn-outline-secondary' %>
+    </div>
+  <% end %>
+</div>

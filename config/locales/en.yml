@@ -41,6 +41,7 @@ en:
   Duration: "Duration"
   Minutes: "Minutes"
   Current: "Currently booking flight from"
+  Select Flight: "Select Flight"
 
   locales:
     en: "English"
